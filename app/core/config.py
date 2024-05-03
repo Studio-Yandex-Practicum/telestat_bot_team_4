@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    management_bot_token: str = 'MANAGEMENT_BOT_TOKEN'
     report_bot_token: str = 'REPORT_BOT_TOKEN'
     database_url: str = 'DATABASE_URL'
 
