@@ -8,7 +8,6 @@ from core.db import Base
 class User(Base):
     __tablename__ = 'user'
     
-    tg_user_id = Column(Integer, primary_key=True, unique=True)
     user_name = Column(String)
     chat_id = Column(Integer)
     subscribe_date = Column(DateTime)
