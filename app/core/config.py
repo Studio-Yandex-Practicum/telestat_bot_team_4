@@ -3,9 +3,9 @@ from pydantic_settings import BaseSettings
 
 # Временно для
 ADMIN_LIST = {
-    146708975,
+    123,
 }
-SUPER_ADMIN = 146708975
+SUPER_ADMIN = 123
 
 
 class Settings(BaseSettings):
