@@ -1,2 +1,2 @@
 class InlineButtonsText:
-    START_ANALYTICS = "Начать сбор аналитики"
+    START_ANALYTICS = 'Начать сбор аналитики'

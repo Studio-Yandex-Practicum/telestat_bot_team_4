@@ -1,5 +1,4 @@
 import asyncio
-import logging
 
 from aiogram import Bot, Dispatcher
 
@@ -12,10 +11,6 @@ from app.keyboards.set_menu import main_menu
 
 
 async def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    )
     management_bot = Bot(token=settings.management_bot_token)
     # report_bot = Bot(token=settings.report_bot_token)
     dp_management = Dispatcher(bot=management_bot)
@@ -27,5 +22,5 @@ async def main():
     # await dp_report.start_polling(report_bot)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     asyncio.run(main())
