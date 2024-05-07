@@ -16,6 +16,7 @@ async def main():
     dp_management = Dispatcher(bot=management_bot)
     dp_management.include_router(base_handlers.router)
     dp_management.include_router(handlers.router)
+    # dp_management.include_router(test.router)
     # dp_report = Dispatcher(bot=report_bot)
     dp_management.startup.register(main_menu)
     await dp_management.start_polling(management_bot)
