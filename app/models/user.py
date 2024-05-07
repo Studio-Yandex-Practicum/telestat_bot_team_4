@@ -6,8 +6,6 @@ from core.db import Base
 
 
 class User(Base):
-    __tablename__ = 'user'
-    
     user_name = Column(String)
     chat_id = Column(Integer)
     subscribe_date = Column(DateTime)
