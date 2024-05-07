@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings
 
 
-# Временно для
+# Временно для тестов
 ADMIN_LIST = {
     123,
 }
