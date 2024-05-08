@@ -14,13 +14,11 @@ class CRUDGroups:
         id: int,
         group_name: str,
         group_id: str,
-        is_choosed: bool,
     ):
         group = self.model(
             id=id,
             group_name=group_name,
             group_id=group_id,
-            is_choosed=is_choosed,
         )
         session.add(group)
         await session.commit()
