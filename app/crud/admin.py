@@ -1,4 +1,3 @@
-from handlers.exceptions import error_admin_is_superuser
 from models.admin import Admin
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -28,11 +27,10 @@ class CRUDAdmin():
         return await session.execute(select(Admin)).scalars().all()
 
     async def remove(self, admin_obj, session: AsyncSession):
-        if admin_obj.is_superuser is True:
-            error_admin_is_superuser()
-        await session.delete(admin_obj)
-        await session.commit()
-        return admin_obj
+        if not admin_obj.is_superuser:
+            await session.delete(admin_obj)
+            await session.commit()
+            return admin_obj
 
 
 admin_crud = CRUDAdmin(Admin)
