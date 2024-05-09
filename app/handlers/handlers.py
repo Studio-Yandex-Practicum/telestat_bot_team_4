@@ -1,9 +1,9 @@
+from app.crud.groups import groups_crud
+
 from aiogram import F, Router
 from aiogram.types import CallbackQuery
 from app.keyboards.callback_data.callback_data import CallbackData
 from app.services.services import collecting_analytics
-from app.crud.groups import groups_crud
-
 from aiogram.filters.chat_member_updated import (
     ChatMemberUpdatedFilter,
     IS_NOT_MEMBER,
@@ -37,7 +37,9 @@ async def start_analytics(callback: CallbackQuery):
     )
 )
 async def add_group_to_database(event: ChatMemberUpdated):
-    await groups_crud.create(
-        group_name=event.chat.title,
-        chat_id=event.chat.id,
-    )
+    group_list = await groups_crud.get(event.chat.id)
+    if not group_list:
+        await groups_crud.create(
+            group_name=event.chat.title,
+            group_id=event.chat.id,
+        )

@@ -1,4 +1,5 @@
 from sqlalchemy import select
+from app.core.db import AsyncSessionLocal
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.groups import Groups
@@ -10,30 +11,33 @@ class CRUDGroups:
 
     async def create(
         self,
-        session: AsyncSession,
-        id: int,
         group_name: str,
         group_id: str,
     ):
         group = self.model(
-            id=id,
             group_name=group_name,
             group_id=group_id,
         )
-        session.add(group)
-        await session.commit()
-        await session.refresh(group)
-        return group
+        async with AsyncSessionLocal() as session:
+            session.add(group)
+            await session.commit()
 
-    async def get(self, group_id: str, session: AsyncSession):
-        return (
-            await session.execute(select(Groups).filter(Groups.group_id == group_id))
-            .scalars()
-            .first()
-        )
+    async def get(self, group_id: str):
+        async with AsyncSessionLocal() as session:
+            group = await session.execute(
+                select(Groups).filter(Groups.group_id == group_id)
+            )
+        return group.scalars().first()
 
-    async def get_all(self, session: AsyncSession):
-        return await session.execute(select(Groups)).scalars().all()
+    async def get_all(
+        self,
+    ):
+        async with AsyncSessionLocal() as session:
+            # Получаем объект класса Result.
+            all_groups = await session.execute(select(Groups))
+            # Извлекаем из него конкретное значение.
+            groups_list = all_groups.scalars().all()
+        return groups_list
 
     async def remove(
         self,
