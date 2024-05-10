@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, Text
 
-from core.db import Base
+from app.core.db import Base
 
 
 class User(Base):
@@ -15,4 +15,3 @@ class User(Base):
     gender = Column(String)
     country = Column(String)
     description = Column(String)
-
