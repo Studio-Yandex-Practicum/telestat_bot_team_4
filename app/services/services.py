@@ -1,16 +1,46 @@
-from aiogram.types.chat_member_member import ChatMemberMember
+from pyrogram import Client
+from datetime import datetime
+from app.core.config import settings
 from country_list import countries_for_language
+import gender_guesser.detector as gender
 
 countries = dict(countries_for_language('en'))
+d = gender.Detector()
+
+api_id = settings.api_id
+api_hash = settings.api_hash
+bot_token = settings.management_bot_token
 
 
-def collecting_analytics(data: ChatMemberMember):
-    user = data.user
-    user_data = {
-        'id': user.id,
-        'username': user.username,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'country': countries[user.language_code.upper()],
-    }
+async def chat_members(chat_id):
+    app = Client(
+        'Имя | Бот',
+        api_id=api_id,
+        api_hash=api_hash,
+        bot_token=bot_token,
+        in_memory=True,
+    )
+    user_data: list[dict] = []
+    await app.start()
+    async for member in app.get_chat_members(chat_id):
+        if member.user.language_code:
+            country = countries[member.user.language_code.upper()]
+        else:
+            country = 'Страна не определена'
+        user_data.append(
+            {
+                'user_id': member.user.id,
+                'first_name': member.user.first_name,
+                'last_name': member.user.last_name,
+                'user_name': member.user.username,
+                'country': country,
+                'chat_id': chat_id,
+                'subscribe_date': datetime.now(),
+                'avatar': 'avatar',
+                'utm_mark': 'UTM',
+                'gender': d.get_gender(member.user.first_name),
+                'description': 'description',
+            }
+        )
+    await app.stop()
     return user_data

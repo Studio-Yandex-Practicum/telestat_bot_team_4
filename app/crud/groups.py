@@ -42,10 +42,10 @@ class CRUDGroups:
     async def remove(
         self,
         group_obj: Groups,
-        session: AsyncSession,
     ):
-        await session.delete(group_obj)
-        await session.commit()
+        async with AsyncSessionLocal() as session:
+            await session.delete(group_obj)
+            await session.commit()
         return group_obj
 
 
