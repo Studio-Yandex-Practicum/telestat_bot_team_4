@@ -2,12 +2,6 @@ from pydantic_settings import BaseSettings
 
 
 # Временно для тестов
-ADMIN_LIST = {
-    14670,
-}
-SUPER_ADMIN = 123
-
-
 class Settings(BaseSettings):
     management_bot_token: str = 'MANAGEMENT_BOT_TOKEN'
     report_bot_token: str = 'REPORT_BOT_TOKEN'

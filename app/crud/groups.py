@@ -33,9 +33,7 @@ class CRUDGroups:
         self,
     ):
         async with AsyncSessionLocal() as session:
-            # Получаем объект класса Result.
             all_groups = await session.execute(select(Groups))
-            # Извлекаем из него конкретное значение.
             groups_list = all_groups.scalars().all()
         return groups_list
 

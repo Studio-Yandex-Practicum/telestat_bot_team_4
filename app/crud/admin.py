@@ -1,4 +1,4 @@
-from models.admin import Admin
+from app.models.admin import Admin
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import AsyncSessionLocal
@@ -21,7 +21,9 @@ class CRUDAdmin:
             session.add(admin)
             await session.commit()
 
-    async def get_all(self, session: AsyncSession):
+    async def get_all(
+        self,
+    ) -> list:
         async with AsyncSessionLocal() as session:
             admin_list = await session.execute(select(Admin))
             admins = admin_list.scalars().all()
