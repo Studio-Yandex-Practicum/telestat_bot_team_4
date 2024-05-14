@@ -1,8 +1,5 @@
-from datetime import datetime
-
 from sqlalchemy import select, Text, Date
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.db import AsyncSessionLocal
 
 from app.models.user import User
 
@@ -13,6 +10,7 @@ class CRUDUser:
 
     async def create(
         self,
+        session: AsyncSession,
         user_id: int,
         first_name: str,
         last_name: str,
@@ -38,22 +36,22 @@ class CRUDUser:
             country=country,
             description=description,
         )
-        async with AsyncSessionLocal() as session:
-            session.add(user)
-            await session.commit()
+
+        session.add(user)
+        await session.commit()
 
     async def get(self, session: AsyncSession, id: int):
-        return (
-            await session.execute(select(User).filter(User.id == id)).scalars().first()
-        )
+        obj_user = await session.execute(select(User).filter(User.id == id))
+        user = obj_user.scalars().first()
+        return user
 
     async def get_all(
         self,
+        session: AsyncSession,
     ):
-        async with AsyncSessionLocal() as session:
-            all_users = await session.execute(select(User))
-            users_list = all_users.scalars().all()
-            return users_list
+        all_users = await session.execute(select(User))
+        users_list = all_users.scalars().all()
+        return users_list
 
 
 user_crud = CRUDUser(User)

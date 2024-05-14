@@ -1,7 +1,6 @@
 from app.models.admin import Admin
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.db import AsyncSessionLocal
 
 
 class CRUDAdmin:
@@ -10,6 +9,7 @@ class CRUDAdmin:
 
     async def create(
         self,
+        session: AsyncSession,
         is_superuser: bool,
         user_id: int,
     ):
@@ -17,23 +17,21 @@ class CRUDAdmin:
             is_superuser=is_superuser,
             user_id=user_id,
         )
-        async with AsyncSessionLocal() as session:
-            session.add(admin)
-            await session.commit()
+        session.add(admin)
+        await session.commit()
 
     async def get_all(
         self,
+        session: AsyncSession,
     ) -> list:
-        async with AsyncSessionLocal() as session:
-            admin_list = await session.execute(select(Admin))
-            admins = admin_list.scalars().all()
-            return admins
+        admin_list = await session.execute(select(Admin))
+        admins = admin_list.scalars().all()
+        return admins
 
     async def remove(self, admin_obj, session: AsyncSession):
         if not admin_obj.is_superuser:
             await session.delete(admin_obj)
             await session.commit()
-            return admin_obj
 
 
 admin_crud = CRUDAdmin(Admin)
