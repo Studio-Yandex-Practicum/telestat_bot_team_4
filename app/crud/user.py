@@ -1,4 +1,4 @@
-from sqlalchemy import select, Text, Date
+from sqlalchemy import Date, Text, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.user import User

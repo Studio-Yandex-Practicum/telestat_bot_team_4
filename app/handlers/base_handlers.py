@@ -1,9 +1,8 @@
-from aiogram import F, Router
-from aiogram import types
+from aiogram import Router, types
 from aiogram.filters import CommandStart
-from app.keyboards.inline_keyboard import kb_analytics
-from app.filters.filters import IsAdmin
 
+from app.filters.filters import IsAdmin
+from app.keyboards.inline_keyboard import kb_analytics
 
 router = Router()
 

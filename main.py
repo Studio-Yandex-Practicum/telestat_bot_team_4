@@ -4,12 +4,12 @@ from aiogram import Bot, Dispatcher
 
 from app.core.config import settings
 from app.core.db import AsyncSessionLocal, create_db
+from app.handlers import base_handlers, handlers
+from app.keyboards.set_menu import main_menu
 from app.middlewares.middleware import DataBaseSession
 
 # Кнопки меню
 
-from app.handlers import base_handlers, handlers
-from app.keyboards.set_menu import main_menu
 
 
 async def main():

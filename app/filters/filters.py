@@ -1,7 +1,8 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
-from app.crud.admin import admin_crud
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.crud.admin import admin_crud
 
 
 class IsAdmin(BaseFilter):

@@ -1,6 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from app.keyboards.callback_data.callback_data import CallbackData
 
+from app.keyboards.callback_data.callback_data import CallbackData
 
 START_ANALYTICS = 'Начать сбор аналитики'
 

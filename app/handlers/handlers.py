@@ -1,19 +1,14 @@
-from app.crud.groups import groups_crud
-from app.crud.user import user_crud
-
 from aiogram import F, Router
-from aiogram.types import CallbackQuery
-from app.keyboards.callback_data.callback_data import CallbackData
-from aiogram.filters.chat_member_updated import (
-    ChatMemberUpdatedFilter,
-    IS_NOT_MEMBER,
-    MEMBER,
-    ADMINISTRATOR,
-)
-from aiogram.types import ChatMemberUpdated
-from app.services.services import chat_members
+from aiogram.filters.chat_member_updated import (ADMINISTRATOR, IS_NOT_MEMBER,
+                                                 MEMBER,
+                                                 ChatMemberUpdatedFilter)
+from aiogram.types import CallbackQuery, ChatMemberUpdated
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.crud.groups import groups_crud
+from app.crud.user import user_crud
+from app.keyboards.callback_data.callback_data import CallbackData
+from app.services.services import chat_members
 
 router = Router()
 router.my_chat_member.filter(F.chat.type.in_({'group', 'supergroup', 'channel'}))

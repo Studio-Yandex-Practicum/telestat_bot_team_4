@@ -1,8 +1,10 @@
-from pyrogram import Client
 from datetime import datetime
-from app.core.config import settings
-from country_list import countries_for_language
+
 import gender_guesser.detector as gender
+from country_list import countries_for_language
+from pyrogram import Client
+
+from app.core.config import settings
 
 countries = dict(countries_for_language('en'))
 d = gender.Detector()

@@ -1,6 +1,7 @@
-from app.models.admin import Admin
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.admin import Admin
 
 
 class CRUDAdmin:

@@ -1,7 +1,6 @@
 from aiogram import Bot
 from aiogram.types import BotCommand
 
-
 MENU_BUTTONS_TEXT: dict[str, str] = {
     '/start': 'Запуск бота, доступна только админам',
     '/help': 'Справка по работе бота',
