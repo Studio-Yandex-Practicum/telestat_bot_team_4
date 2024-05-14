@@ -3,7 +3,6 @@ import asyncio
 from aiogram import Bot, Dispatcher
 
 from middlewares.middleware import DataBaseSession
-
 from app.core.config import settings
 from core.db import AsyncSessionLocal
 
