@@ -1,6 +1,9 @@
 import asyncio
 
 from aiogram import Bot, Dispatcher
+from sqlalchemy.ext.asyncio import async_session
+
+from middlewares.middleware import DataBaseSession
 
 from app.core.config import settings
 
@@ -14,6 +17,9 @@ async def main():
     management_bot = Bot(token=settings.management_bot_token)
     # report_bot = Bot(token=settings.report_bot_token)
     dp_management = Dispatcher(bot=management_bot)
+    dp_management.update.middleware(
+        DataBaseSession(async_session=async_session)
+    )
     dp_management.include_router(base_handlers.router)
     dp_management.include_router(handlers.router)
     # dp_report = Dispatcher(bot=report_bot)
