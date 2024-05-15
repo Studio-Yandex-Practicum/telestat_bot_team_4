@@ -1,10 +1,12 @@
 import asyncio
+import logging
 
 from aiogram import Bot, Dispatcher
 
 from app.core.config import settings
 from app.core.db import AsyncSessionLocal
 from app.middlewares.middleware import DataBaseSession
+from app.logs.logger import configure_logging
 
 # Кнопки меню
 
@@ -13,6 +15,9 @@ from app.keyboards.set_menu import main_menu
 
 
 async def main():
+    configure_logging('management_bot')
+    logging.info('Запуск бота - management_bot.')
+
     management_bot = Bot(token=settings.management_bot_token)
     report_bot = Bot(token=settings.report_bot_token)
     dp_management = Dispatcher(bot=management_bot)
@@ -21,6 +26,10 @@ async def main():
     )
     dp_management.include_router(base_handlers.router)
     dp_management.include_router(handlers.router)
+
+    configure_logging('report_bot')
+    logging.info('Запуск бота - report_bot.')
+
     dp_report = Dispatcher(bot=report_bot)
     dp_report.update.middleware(
         DataBaseSession(async_session=AsyncSessionLocal)
@@ -31,4 +40,7 @@ async def main():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit):
+        logging.error('Ошибка запуска бота')
