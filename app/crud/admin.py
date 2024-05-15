@@ -1,36 +1,38 @@
-from models.admin import Admin
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.models.admin import Admin
 
-class CRUDAdmin():
 
+class CRUDAdmin:
     def __init__(self, model):
         self.model = model
 
     async def create(
-            self,
-            session: AsyncSession,
-            id: int,
-            is_superuser: bool,
+        self,
+        session: AsyncSession,
+        is_superuser: bool,
+        user_id: int,
     ):
         admin = self.model(
-            id=id,
             is_superuser=is_superuser,
+            user_id=user_id,
         )
         session.add(admin)
         await session.commit()
-        await session.refresh(admin)
-        return admin
 
-    async def get_all(self, session: AsyncSession):
-        return await session.execute(select(Admin)).scalars().all()
+    async def get_all(
+        self,
+        session: AsyncSession,
+    ) -> list:
+        admin_list = await session.execute(select(Admin))
+        admins = admin_list.scalars().all()
+        return admins
 
     async def remove(self, admin_obj, session: AsyncSession):
         if not admin_obj.is_superuser:
             await session.delete(admin_obj)
             await session.commit()
-            return admin_obj
 
 
 admin_crud = CRUDAdmin(Admin)

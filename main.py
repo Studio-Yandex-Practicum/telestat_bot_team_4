@@ -3,13 +3,13 @@ import asyncio
 from aiogram import Bot, Dispatcher
 
 from app.core.config import settings
-from app.core.db import AsyncSessionLocal
+from app.core.db import AsyncSessionLocal, create_db
+from app.handlers import base_handlers, handlers
+from app.keyboards.set_menu import main_menu
 from app.middlewares.middleware import DataBaseSession
 
 # Кнопки меню
 
-from app.handlers import base_handlers, handlers
-from app.keyboards.set_menu import main_menu
 
 
 async def main():
@@ -26,6 +26,7 @@ async def main():
         DataBaseSession(async_session=AsyncSessionLocal)
     )
     dp_management.startup.register(main_menu)
+    await create_db()
     await dp_management.start_polling(management_bot)
     # await dp_report.start_polling(report_bot)
 
