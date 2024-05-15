@@ -1,9 +1,6 @@
-from datetime import datetime
-
-from sqlalchemy import select, Text, Date
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from models.user import User
+from sqlalchemy import Date, Text, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class CRUDUser():

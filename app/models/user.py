@@ -1,12 +1,9 @@
-from datetime import datetime
-
 from core.db import Base
 from sqlalchemy import Column, DateTime, Integer, String, Text
 
 
 class User(Base):
-    __tablename__ = 'user'
-    
+
     user_name = Column(String)
     chat_id = Column(Integer)
     subscribe_date = Column(DateTime)
@@ -16,4 +13,3 @@ class User(Base):
     gender = Column(String)
     country = Column(String)
     description = Column(String)
-
