@@ -23,6 +23,11 @@ class CRUDAdmin():
         await session.refresh(admin)
         return admin
 
+    async def get(self, session: AsyncSession, id: int):
+        return await session.execute(
+            select(Admin).filter(Admin.id == id)
+            ).scalars().first()
+
     async def get_all(self, session: AsyncSession):
         return await session.execute(select(Admin)).scalars().all()
 
