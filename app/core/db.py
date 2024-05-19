@@ -1,15 +1,12 @@
-from sqlalchemy.ext.asyncio import (
-    AsyncSession, async_sessionmaker, create_async_engine
-)
-from sqlalchemy.orm import (
-    declarative_base, declared_attr, Mapped, mapped_column
-)
+from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
+                                    create_async_engine)
+from sqlalchemy.orm import (Mapped, declarative_base, declared_attr,
+                            mapped_column)
 
-from core.config import settings
+from app.core.config import settings
 
 
 class PreBase:
-
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
@@ -19,7 +16,7 @@ class PreBase:
 
 Base = declarative_base(cls=PreBase)
 engine = create_async_engine(settings.database_url)
-async_session = async_sessionmaker(engine, class_=AsyncSession)
+AsyncSessionLocal = async_sessionmaker(engine, class_=AsyncSession)
 
 
 async def create_db():
